@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-classes-per-file */
@@ -164,6 +165,7 @@ class BinarySeachTree {
     } else {
       this.insertNode(this.root, newNode)
     }
+    arr.push(data)
   }
 
   insertNode(node, newNode) {
@@ -298,10 +300,22 @@ class BinarySeachTree {
     }
   }
 
-  isBalanced() {
-    const leftHeight = this.height(this.root.left)
-    const rightHeight = this.height(this.root.right)
-    return Math.abs(leftHeight - rightHeight) <= 1
+  isBalanced(node = this.root) {
+    if (node === null) return 0
+
+    const leftHeight = this.isBalanced(node.left)
+    if (leftHeight === false) return -1
+
+    const rightHeight = this.isBalanced(node.right)
+    if (rightHeight === false) return -1
+
+    if (Math.abs(leftHeight - rightHeight) > 1) return -1
+    return Math.max(leftHeight, rightHeight) + 1
+  }
+
+  rebalance() {
+    this.root = buildTree(arr)
+    return 'Balancing completed'
   }
 }
 
@@ -330,3 +344,23 @@ console.log(newTree.depth(9))
 console.log(newTree.find(9))
 
 console.log(newTree.findMinNode())
+
+
+
+newTree.insert(123)
+newTree.insert(124)
+newTree.insert(125)
+newTree.insert(126)
+newTree.insert(126)
+newTree.insert(126)
+newTree.insert(126)
+newTree.insert(126)
+newTree.insert(127)
+newTree.insert(128)
+newTree.insert(129)
+newTree.insert(130)
+newTree.insert(131)
+newTree.insert(132)
+
+console.log(newTree.isBalanced())
+console.log(newTree.rebalance())
